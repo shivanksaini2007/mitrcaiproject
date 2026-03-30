@@ -1,60 +1,68 @@
 import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
-import { ArrowRight } from "lucide-react";
+import { ArrowRight, Zap, Truck, Shield } from "lucide-react";
 import { Button } from "@/components/ui/button";
 
 const HeroSection = () => (
-  <section className="relative overflow-hidden min-h-[85vh] flex items-center bg-gradient-to-br from-secondary via-background to-secondary/50">
-    {/* Subtle decorative circles */}
-    <div className="absolute top-1/4 -right-32 w-[500px] h-[500px] rounded-full bg-primary/5 blur-3xl" />
-    <div className="absolute -bottom-20 -left-20 w-[400px] h-[400px] rounded-full bg-primary/5 blur-3xl" />
+  <section className="relative overflow-hidden bg-gradient-to-br from-primary/5 via-background to-accent/5">
+    <div className="container py-12 md:py-20">
+      <div className="grid md:grid-cols-2 gap-8 items-center">
+        <motion.div
+          initial={{ opacity: 0, x: -24 }}
+          animate={{ opacity: 1, x: 0 }}
+          transition={{ duration: 0.6 }}
+        >
+          <span className="inline-flex items-center gap-2 bg-accent/10 text-accent rounded-full px-4 py-1.5 text-xs font-semibold uppercase tracking-wider mb-4">
+            <Zap className="w-3.5 h-3.5" /> Hot Deals This Week
+          </span>
+          <h1 className="font-display text-4xl sm:text-5xl md:text-6xl text-foreground leading-[1.1] mb-4 text-balance">
+            Shop smarter, <em className="text-primary">live better</em>.
+          </h1>
+          <p className="text-muted-foreground text-base md:text-lg font-light leading-relaxed mb-8 max-w-lg">
+            Discover incredible deals on thousands of products. Free shipping on orders over $100.
+          </p>
+          <div className="flex flex-wrap items-center gap-3">
+            <Button asChild size="lg" className="gap-2 font-body text-sm">
+              <Link to="/products">Shop All Deals <ArrowRight className="w-4 h-4" /></Link>
+            </Button>
+            <Button asChild variant="outline" size="lg" className="font-body text-sm">
+              <Link to="/products?cat=Electronics">Electronics Sale</Link>
+            </Button>
+          </div>
+          {/* Trust badges */}
+          <div className="flex flex-wrap items-center gap-6 mt-8 text-xs text-muted-foreground">
+            <span className="flex items-center gap-1.5"><Truck className="w-4 h-4 text-deal" /> Free Shipping $100+</span>
+            <span className="flex items-center gap-1.5"><Shield className="w-4 h-4 text-primary" /> Secure Checkout</span>
+          </div>
+        </motion.div>
 
-    <div className="container relative z-10 py-20 md:py-32 flex flex-col items-center text-center">
-      <motion.span
-        initial={{ opacity: 0, y: 12 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ delay: 0.1, duration: 0.6, ease: [0.25, 0.1, 0.25, 1] }}
-        className="inline-flex items-center gap-2 glass rounded-full px-5 py-2 text-[11px] uppercase tracking-[0.2em] text-muted-foreground mb-8"
-      >
-        <span className="w-1.5 h-1.5 rounded-full bg-primary animate-pulse" />
-        New Season 2026
-      </motion.span>
-
-      <motion.h1
-        initial={{ opacity: 0, y: 30 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ delay: 0.2, duration: 0.8, ease: [0.25, 0.1, 0.25, 1] }}
-        className="font-display text-5xl sm:text-6xl md:text-7xl lg:text-[5.5rem] text-foreground leading-[1.05] max-w-4xl text-balance"
-      >
-        Less, but <em className="text-primary">better</em>.
-      </motion.h1>
-
-      <motion.p
-        initial={{ opacity: 0, y: 24 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ delay: 0.4, duration: 0.7, ease: [0.25, 0.1, 0.25, 1] }}
-        className="mt-6 text-base md:text-lg text-muted-foreground max-w-md font-light leading-relaxed"
-      >
-        Thoughtfully curated products designed to elevate your everyday. Quality craftsmanship meets modern simplicity.
-      </motion.p>
-
-      <motion.div
-        initial={{ opacity: 0, y: 24 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ delay: 0.55, duration: 0.7, ease: [0.25, 0.1, 0.25, 1] }}
-        className="mt-10 flex items-center gap-4"
-      >
-        <Button asChild size="lg" className="gap-2.5 font-body text-sm tracking-wide">
-          <Link to="/products">
-            Shop Collection <ArrowRight className="w-4 h-4" />
-          </Link>
-        </Button>
-        <Button asChild variant="glass" size="lg" className="font-body text-sm tracking-wide">
-          <Link to="/products?cat=Fashion">
-            Explore Fashion
-          </Link>
-        </Button>
-      </motion.div>
+        <motion.div
+          initial={{ opacity: 0, x: 24 }}
+          animate={{ opacity: 1, x: 0 }}
+          transition={{ duration: 0.6, delay: 0.2 }}
+          className="hidden md:grid grid-cols-2 gap-3"
+        >
+          {[
+            { img: "https://images.unsplash.com/photo-1505740420928-5e560c06d30e?w=400&q=80", label: "Up to 30% off", sub: "Electronics" },
+            { img: "https://images.unsplash.com/photo-1521572163474-6864f9cf17ab?w=400&q=80", label: "New arrivals", sub: "Fashion" },
+            { img: "https://images.unsplash.com/photo-1572635196237-14b3f281503f?w=400&q=80", label: "Best sellers", sub: "Accessories" },
+            { img: "https://images.unsplash.com/photo-1495474472287-4d71bcdd2085?w=400&q=80", label: "Trending now", sub: "Home" },
+          ].map((item, i) => (
+            <Link
+              key={i}
+              to={`/products?cat=${item.sub}`}
+              className="group relative aspect-square rounded-xl overflow-hidden bg-secondary"
+            >
+              <img src={item.img} alt={item.sub} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" loading="lazy" />
+              <div className="absolute inset-0 bg-gradient-to-t from-foreground/60 to-transparent" />
+              <div className="absolute bottom-3 left-3">
+                <p className="text-background text-xs font-bold">{item.label}</p>
+                <p className="text-background/70 text-[10px]">{item.sub}</p>
+              </div>
+            </Link>
+          ))}
+        </motion.div>
+      </div>
     </div>
   </section>
 );

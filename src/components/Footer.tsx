@@ -1,42 +1,43 @@
 import { Link } from "react-router-dom";
+import { categories } from "@/data/products";
 
 const Footer = () => (
-  <footer className="border-t border-border/50 bg-card/50 mt-20">
-    <div className="container py-16 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-10">
-      <div>
-        <Link to="/" className="font-display text-2xl italic text-foreground">Maison</Link>
-        <p className="text-sm text-muted-foreground leading-relaxed mt-3 font-light">
-          Curated essentials for a considered life. Quality over quantity, always.
+  <footer className="bg-foreground text-background mt-16">
+    <div className="container py-12 grid grid-cols-2 sm:grid-cols-4 gap-8">
+      <div className="col-span-2 sm:col-span-1">
+        <Link to="/" className="font-display text-2xl italic">Maison</Link>
+        <p className="text-background/50 text-xs leading-relaxed mt-3">
+          Your one-stop shop for quality products at incredible prices.
         </p>
       </div>
       <div>
-        <h5 className="text-[11px] uppercase tracking-[0.2em] font-semibold text-foreground mb-4">Shop</h5>
-        <ul className="space-y-2.5 text-sm text-muted-foreground font-light">
-          <li><Link to="/products" className="hover:text-primary transition-colors duration-300">All Products</Link></li>
-          <li><Link to="/products?cat=Electronics" className="hover:text-primary transition-colors duration-300">Electronics</Link></li>
-          <li><Link to="/products?cat=Fashion" className="hover:text-primary transition-colors duration-300">Fashion</Link></li>
-          <li><Link to="/products?cat=Accessories" className="hover:text-primary transition-colors duration-300">Accessories</Link></li>
+        <h5 className="text-xs uppercase tracking-widest font-semibold mb-3">Shop</h5>
+        <ul className="space-y-2 text-xs text-background/50">
+          <li><Link to="/products" className="hover:text-background transition-colors">All Products</Link></li>
+          {categories.filter(c => c !== "All").map(c => (
+            <li key={c}><Link to={`/products?cat=${c}`} className="hover:text-background transition-colors">{c}</Link></li>
+          ))}
         </ul>
       </div>
       <div>
-        <h5 className="text-[11px] uppercase tracking-[0.2em] font-semibold text-foreground mb-4">Company</h5>
-        <ul className="space-y-2.5 text-sm text-muted-foreground font-light">
-          <li><span className="hover:text-primary transition-colors duration-300 cursor-pointer">About Us</span></li>
-          <li><span className="hover:text-primary transition-colors duration-300 cursor-pointer">Sustainability</span></li>
-          <li><span className="hover:text-primary transition-colors duration-300 cursor-pointer">Careers</span></li>
+        <h5 className="text-xs uppercase tracking-widest font-semibold mb-3">Company</h5>
+        <ul className="space-y-2 text-xs text-background/50">
+          <li><span className="hover:text-background transition-colors cursor-pointer">About Us</span></li>
+          <li><span className="hover:text-background transition-colors cursor-pointer">Careers</span></li>
+          <li><span className="hover:text-background transition-colors cursor-pointer">Press</span></li>
         </ul>
       </div>
       <div>
-        <h5 className="text-[11px] uppercase tracking-[0.2em] font-semibold text-foreground mb-4">Contact</h5>
-        <ul className="space-y-2.5 text-sm text-muted-foreground font-light">
-          <li>hello@maison.store</li>
-          <li>+1 (555) 123-4567</li>
-          <li>New York, NY</li>
+        <h5 className="text-xs uppercase tracking-widest font-semibold mb-3">Help</h5>
+        <ul className="space-y-2 text-xs text-background/50">
+          <li><span className="hover:text-background transition-colors cursor-pointer">Shipping Info</span></li>
+          <li><span className="hover:text-background transition-colors cursor-pointer">Returns</span></li>
+          <li><span className="hover:text-background transition-colors cursor-pointer">Contact Us</span></li>
         </ul>
       </div>
     </div>
-    <div className="border-t border-border/30">
-      <div className="container py-5 text-center text-[11px] text-muted-foreground tracking-wide">
+    <div className="border-t border-background/10">
+      <div className="container py-4 text-center text-[10px] text-background/30 tracking-wide">
         © {new Date().getFullYear()} Maison. All rights reserved.
       </div>
     </div>
