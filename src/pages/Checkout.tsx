@@ -6,7 +6,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { toast } from "sonner";
 import { useState } from "react";
 import { motion } from "framer-motion";
-import { ArrowLeft, Lock } from "lucide-react";
+import { ArrowLeft, Lock, Shield, Truck } from "lucide-react";
 
 const Checkout = () => {
   const { items, totalPrice, clearCart } = useCart();
@@ -15,8 +15,8 @@ const Checkout = () => {
 
   if (items.length === 0) {
     return (
-      <div className="container py-24 text-center">
-        <h1 className="font-display text-2xl text-foreground mb-4">No items in cart</h1>
+      <div className="container py-20 text-center">
+        <h1 className="font-display text-2xl text-foreground mb-4">No items to checkout</h1>
         <Button asChild className="font-body"><Link to="/products">Continue Shopping</Link></Button>
       </div>
     );
@@ -29,48 +29,42 @@ const Checkout = () => {
     setSubmitting(true);
     setTimeout(() => {
       clearCart();
-      toast.success("Order placed successfully!");
+      toast.success("Order placed! Thank you for shopping with Maison.");
       navigate("/");
     }, 1500);
   };
 
   return (
-    <div className="container py-12 md:py-16 max-w-4xl">
-      <Link to="/cart" className="inline-flex items-center gap-1.5 text-sm text-muted-foreground hover:text-primary transition-colors duration-300 mb-10 group">
-        <ArrowLeft className="w-4 h-4 group-hover:-translate-x-0.5 transition-transform duration-300" /> Back to cart
+    <div className="container py-6 md:py-10 max-w-4xl">
+      <Link to="/cart" className="inline-flex items-center gap-1.5 text-sm text-muted-foreground hover:text-primary transition-colors mb-6 group">
+        <ArrowLeft className="w-4 h-4 group-hover:-translate-x-0.5 transition-transform" /> Back to cart
       </Link>
 
-      <motion.h1
-        initial={{ opacity: 0, y: 16 }}
-        animate={{ opacity: 1, y: 0 }}
-        className="font-display text-3xl md:text-4xl text-foreground mb-10"
-      >
-        Checkout
-      </motion.h1>
+      <h1 className="font-display text-2xl md:text-3xl text-foreground mb-8">Checkout</h1>
 
-      <form onSubmit={handleSubmit} className="grid md:grid-cols-5 gap-12">
-        <motion.div
-          initial={{ opacity: 0, y: 16 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.1 }}
-          className="md:col-span-3 space-y-7"
-        >
-          <h2 className="font-display text-xl text-foreground">Shipping Information</h2>
-          <div className="space-y-2">
-            <Label htmlFor="name" className="text-xs uppercase tracking-widest text-muted-foreground">Full Name</Label>
-            <Input id="name" required placeholder="John Doe" className="h-12 rounded-xl glass border-border/40 text-sm" />
+      <form onSubmit={handleSubmit} className="grid md:grid-cols-5 gap-8">
+        <motion.div initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }} className="md:col-span-3 space-y-6">
+          <div className="bg-card rounded-xl p-5 shadow-soft space-y-4">
+            <h2 className="text-sm font-semibold uppercase tracking-wider text-foreground">Shipping Information</h2>
+            <div className="grid grid-cols-2 gap-3">
+              <div className="col-span-2 sm:col-span-1 space-y-1.5">
+                <Label className="text-xs text-muted-foreground">Full Name</Label>
+                <Input required placeholder="John Doe" className="h-10 rounded-lg bg-background text-sm" />
+              </div>
+              <div className="col-span-2 sm:col-span-1 space-y-1.5">
+                <Label className="text-xs text-muted-foreground">Email</Label>
+                <Input type="email" required placeholder="john@example.com" className="h-10 rounded-lg bg-background text-sm" />
+              </div>
+            </div>
+            <div className="space-y-1.5">
+              <Label className="text-xs text-muted-foreground">Address</Label>
+              <Input required placeholder="123 Main St, New York, NY" className="h-10 rounded-lg bg-background text-sm" />
+            </div>
           </div>
-          <div className="space-y-2">
-            <Label htmlFor="email" className="text-xs uppercase tracking-widest text-muted-foreground">Email</Label>
-            <Input id="email" type="email" required placeholder="john@example.com" className="h-12 rounded-xl glass border-border/40 text-sm" />
-          </div>
-          <div className="space-y-2">
-            <Label htmlFor="address" className="text-xs uppercase tracking-widest text-muted-foreground">Address</Label>
-            <Input id="address" required placeholder="123 Main St, New York, NY" className="h-12 rounded-xl glass border-border/40 text-sm" />
-          </div>
-          <div className="space-y-2">
-            <Label htmlFor="payment" className="text-xs uppercase tracking-widest text-muted-foreground">Payment Method</Label>
-            <select id="payment" className="w-full h-12 rounded-xl glass border border-border/40 px-4 text-sm text-foreground bg-transparent" required>
+
+          <div className="bg-card rounded-xl p-5 shadow-soft space-y-4">
+            <h2 className="text-sm font-semibold uppercase tracking-wider text-foreground">Payment Method</h2>
+            <select className="w-full h-10 rounded-lg border border-border bg-background px-3 text-sm text-foreground" required>
               <option value="card">Credit / Debit Card</option>
               <option value="paypal">PayPal</option>
               <option value="cod">Cash on Delivery</option>
@@ -78,30 +72,33 @@ const Checkout = () => {
           </div>
         </motion.div>
 
-        <motion.div
-          initial={{ opacity: 0, y: 16 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.2 }}
-          className="md:col-span-2"
-        >
-          <h2 className="font-display text-xl text-foreground mb-5">Order Summary</h2>
-          <div className="glass rounded-2xl p-6 space-y-3">
-            {items.map(item => (
-              <div key={item.id} className="flex justify-between text-sm">
-                <span className="text-muted-foreground truncate mr-3">{item.name} × {item.quantity}</span>
-                <span className="text-foreground font-medium whitespace-nowrap">${(item.price * item.quantity).toFixed(2)}</span>
-              </div>
-            ))}
-            <div className="border-t border-border/40 pt-4 mt-4 space-y-2">
-              <div className="flex justify-between text-sm text-muted-foreground"><span>Shipping</span><span>{shippingCost === 0 ? "Free" : `$${shippingCost.toFixed(2)}`}</span></div>
-              <div className="flex justify-between font-semibold text-foreground text-lg pt-2"><span>Total</span><span>${(totalPrice + shippingCost).toFixed(2)}</span></div>
+        <motion.div initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.1 }} className="md:col-span-2">
+          <div className="bg-card rounded-xl p-5 shadow-soft sticky top-36">
+            <h2 className="text-sm font-semibold uppercase tracking-wider text-foreground mb-4">Order Summary</h2>
+            <div className="space-y-2.5 max-h-48 overflow-y-auto">
+              {items.map(item => (
+                <div key={item.id} className="flex gap-3 items-center">
+                  <img src={item.image} alt={item.name} className="w-10 h-10 rounded object-cover" />
+                  <div className="flex-1 min-w-0">
+                    <p className="text-xs text-foreground line-clamp-1">{item.name}</p>
+                    <p className="text-[10px] text-muted-foreground">Qty: {item.quantity}</p>
+                  </div>
+                  <span className="text-xs font-medium text-foreground">${(item.price * item.quantity).toFixed(2)}</span>
+                </div>
+              ))}
+            </div>
+            <div className="border-t border-border pt-3 mt-3 space-y-1.5">
+              <div className="flex justify-between text-sm text-muted-foreground"><span>Shipping</span><span>{shippingCost === 0 ? <span className="text-deal font-medium">Free</span> : `$${shippingCost.toFixed(2)}`}</span></div>
+              <div className="flex justify-between font-bold text-foreground text-lg pt-1"><span>Total</span><span>${(totalPrice + shippingCost).toFixed(2)}</span></div>
+            </div>
+            <Button type="submit" size="lg" disabled={submitting} className="w-full font-body mt-5 gap-2 text-sm">
+              <Lock className="w-3.5 h-3.5" /> {submitting ? "Processing..." : "Place Order"}
+            </Button>
+            <div className="flex items-center justify-center gap-3 mt-3 text-[10px] text-muted-foreground">
+              <span className="flex items-center gap-1"><Shield className="w-3 h-3" /> Secure</span>
+              <span className="flex items-center gap-1"><Truck className="w-3 h-3" /> Fast Delivery</span>
             </div>
           </div>
-          <Button type="submit" size="lg" disabled={submitting} className="w-full font-body mt-6 gap-2 text-sm">
-            <Lock className="w-3.5 h-3.5" />
-            {submitting ? "Processing..." : "Place Order"}
-          </Button>
-          <p className="text-[10px] text-muted-foreground text-center mt-3">Secure checkout · SSL encrypted</p>
         </motion.div>
       </form>
     </div>
