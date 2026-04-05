@@ -129,6 +129,25 @@ const Navbar = () => {
       <div className="bg-card border-b border-border hidden md:block">
         <div className="container">
           <nav className="flex items-center gap-1 h-10 overflow-x-auto scrollbar-hide">
+            <Link
+              to="/events"
+              className={`px-3 py-1 text-xs font-medium rounded-md whitespace-nowrap transition-colors ${
+                location.pathname.startsWith("/events") ? "bg-primary text-primary-foreground" : "text-muted-foreground hover:text-foreground hover:bg-secondary"
+              }`}
+            >
+              📅 Events
+            </Link>
+            {user && (
+              <Link
+                to="/admin/events"
+                className={`px-3 py-1 text-xs font-medium rounded-md whitespace-nowrap transition-colors ${
+                  location.pathname === "/admin/events" ? "bg-primary text-primary-foreground" : "text-muted-foreground hover:text-foreground hover:bg-secondary"
+                }`}
+              >
+                My Events
+              </Link>
+            )}
+            <div className="w-px h-4 bg-border mx-1" />
             {categories.filter(c => c !== "All").map(cat => (
               <Link
                 key={cat}

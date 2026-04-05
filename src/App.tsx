@@ -14,6 +14,9 @@ import ProductDetail from "./pages/ProductDetail";
 import Cart from "./pages/Cart";
 import Checkout from "./pages/Checkout";
 import Auth from "./pages/Auth";
+import Events from "./pages/Events";
+import EventDetail from "./pages/EventDetail";
+import AdminEvents from "./pages/AdminEvents";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -36,6 +39,9 @@ const App = () => (
                   <Route path="/cart" element={<Cart />} />
                   <Route path="/checkout" element={<Checkout />} />
                   <Route path="/auth" element={<Auth />} />
+                  <Route path="/events" element={<Events />} />
+                  <Route path="/events/:id" element={<EventDetail />} />
+                  <Route path="/admin/events" element={<AdminEvents />} />
                   <Route path="*" element={<NotFound />} />
                 </Routes>
               </main>
